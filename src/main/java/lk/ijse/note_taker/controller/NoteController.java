@@ -21,7 +21,6 @@ public class NoteController {
     //Todo: Save a note
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveNote(@RequestBody NoteDTO note) {
-        //Todo: Handle with BO
         String req = noteBO.saveNote(note);
         return ResponseEntity.ok(req);
     }
@@ -47,8 +46,8 @@ public class NoteController {
     }
 
     //Todo: Update a note
-    @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public void updateNote(@PathVariable String id, @RequestBody NoteDTO note) {
+    @PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void updateNote(@PathVariable("id") String id, @RequestBody NoteDTO note) {
         note.setCreatedDateTime(AppUtil.getCurrentDateTime());
         System.out.println("Update Note ID: " + id);
         System.out.println("Update Note Title: " + note.getNoteTitle());
