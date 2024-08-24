@@ -18,21 +18,25 @@ public final class NoteBOIMPL implements NoteBO {
 
     @Override
     public boolean updateNote(NoteDTO noteDTO) {
-        return false;
+        System.out.println("Update note BO layer");
+        return true;
     }
 
     @Override
     public boolean deleteNote(String id) {
-        return false;
+        System.out.println("Delete note BO layer");
+        return true;
     }
 
     @Override
     public NoteDTO getNoteById(String id) {
+        System.out.println("Get note by ID BO layer");
         return null;
     }
 
     @Override
     public List<NoteDTO> getAllNotes() {
+        System.out.println("Get all notes BO layer");
         return null;
     }
 }
