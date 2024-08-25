@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class AppUtil {
     public static String generateID() {
-        return "Note+"+UUID.randomUUID();
+        return "Note-"+UUID.randomUUID();
     }
 
     public static LocalDateTime getCurrentDateTime() {

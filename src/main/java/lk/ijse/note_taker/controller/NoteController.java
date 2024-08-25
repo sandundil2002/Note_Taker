@@ -4,6 +4,7 @@ import lk.ijse.note_taker.service.NoteService;
 import lk.ijse.note_taker.dto.NoteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +38,14 @@ public class NoteController {
     }
 
     //Todo: Update a note
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void updateNote(@PathVariable("id") String id, @RequestBody NoteDTO note) {
         noteService.updateNote(note);
     }
 
     //Todo: Delete a note
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteNote(@PathVariable("id") String id) {
         noteService.deleteNote(id);
