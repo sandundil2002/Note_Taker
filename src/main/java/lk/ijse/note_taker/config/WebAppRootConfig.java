@@ -39,7 +39,7 @@ public class WebAppRootConfig {
         vendorAdapter.setGenerateDdl(true);
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.acme.domain");
+        factory.setPackagesToScan("lk.ijse.note_taker.entity");
         factory.setDataSource(dataSource());
         return factory;
     }
