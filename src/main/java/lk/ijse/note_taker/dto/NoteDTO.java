@@ -15,5 +15,5 @@ public class NoteDTO implements Serializable {
     private String noteTitle;
     private String noteDescription;
     private String priorityLevel;
-    private LocalDateTime createdDateTime;
+    private String createdDateTime;
 }
