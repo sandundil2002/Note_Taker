@@ -31,6 +31,7 @@ public class NoteServiceIMPL implements NoteService {
 
     @Override
     public Boolean updateNote(NoteDTO noteDTO) {
+        if (!noteDAO.existsById(noteDTO.getId())) throw new RuntimeException("No such note for update..!");
         NoteEntity noteEntity = mapping.convertToEntity(noteDTO);
         noteDAO.save(noteEntity);
         System.out.println("Note updated : " + noteEntity);
@@ -39,6 +40,7 @@ public class NoteServiceIMPL implements NoteService {
 
     @Override
     public boolean deleteNote(String id) {
+        if (!noteDAO.existsById(id)) throw new RuntimeException("No such note for delete..!");
         noteDAO.deleteById(id);
         System.out.println("Note deleted : " + id);
         return true;
