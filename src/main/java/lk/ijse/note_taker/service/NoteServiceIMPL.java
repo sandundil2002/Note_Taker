@@ -32,15 +32,16 @@ public class NoteServiceIMPL implements NoteService {
     @Override
     public Boolean updateNote(NoteDTO noteDTO) {
         NoteEntity noteEntity = mapping.convertToEntity(noteDTO);
-        NoteEntity save = noteDAO.save(noteEntity);
-        System.out.println(save);
+        noteDAO.save(noteEntity);
         System.out.println("Note updated : " + noteEntity);
         return true;
     }
 
     @Override
     public boolean deleteNote(String id) {
-        return false;
+        noteDAO.deleteById(id);
+        System.out.println("Note deleted : " + id);
+        return true;
     }
 
     @Override
