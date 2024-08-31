@@ -41,7 +41,9 @@ public class NoteServiceIMPL implements NoteService {
 
     @Override
     public NoteDTO getNoteById(String id) {
-        return null;
+        NoteEntity noteEntity = noteDAO.findById(id).get();
+        System.out.println("Get note by id : " + noteEntity);
+        return mapping.convertToDTO(noteEntity);
     }
 
     @Override
