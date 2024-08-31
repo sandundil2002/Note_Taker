@@ -25,6 +25,7 @@ public class NoteServiceIMPL implements NoteService {
         noteDTO.setId(AppUtil.generateID());
         NoteEntity noteEntity = mapping.convertToEntity(noteDTO);
         noteDAO.save(noteEntity);
+        System.out.println("Note saved : " + noteEntity);
         return "Note saved in service layer";
     }
 
@@ -45,6 +46,8 @@ public class NoteServiceIMPL implements NoteService {
 
     @Override
     public List<NoteDTO> getAllNotes() {
-        return List.of();
+        List<NoteEntity> noteEntities = noteDAO.findAll();
+        System.out.println("Get all notes : " + noteEntities);
+        return mapping.convertToDTOList(noteEntities);
     }
 }
