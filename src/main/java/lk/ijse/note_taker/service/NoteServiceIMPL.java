@@ -26,12 +26,16 @@ public class NoteServiceIMPL implements NoteService {
         NoteEntity noteEntity = mapping.convertToEntity(noteDTO);
         noteDAO.save(noteEntity);
         System.out.println("Note saved : " + noteEntity);
-        return "Note saved in service layer";
+        return "Note saved successfully";
     }
 
     @Override
-    public boolean updateNote(NoteDTO noteDTO) {
-        return false;
+    public Boolean updateNote(NoteDTO noteDTO) {
+        NoteEntity noteEntity = mapping.convertToEntity(noteDTO);
+        NoteEntity save = noteDAO.save(noteEntity);
+        System.out.println(save);
+        System.out.println("Note updated : " + noteEntity);
+        return true;
     }
 
     @Override

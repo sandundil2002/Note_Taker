@@ -41,7 +41,12 @@ public class NoteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void updateNote(@PathVariable("id") String id, @RequestBody NoteDTO note) {
-        noteService.updateNote(note);
+        NoteDTO noteById = noteService.getNoteById(id);
+        if (noteById != null) {
+            noteService.updateNote(note);
+        } else {
+            System.out.println("Note not found");
+        }
     }
 
     //Todo: Delete a note
