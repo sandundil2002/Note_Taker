@@ -26,7 +26,7 @@ public class NoteServiceIMPL implements NoteService {
     @Override
     public String saveNote(NoteDTO noteDTO) {
         noteDTO.setId(AppUtil.generateID());
-        NoteEntity noteEntity = mappingUtil.convertToEntity(noteDTO);
+        NoteEntity noteEntity = mappingUtil.noteConvertToEntity(noteDTO);
         noteDAO.save(noteEntity);
         System.out.println("Note saved : " + noteEntity);
         return "Note saved successfully";
@@ -62,14 +62,14 @@ public class NoteServiceIMPL implements NoteService {
     public NoteDTO getNoteById(String id) {
         NoteEntity noteEntity = noteDAO.findById(id).get();
         System.out.println("Get note by id : " + noteEntity);
-        return mappingUtil.convertToDTO(noteEntity);
+        return mappingUtil.noteConvertToDTO(noteEntity);
     }
 
     @Override
     public List<NoteDTO> getAllNotes() {
         List<NoteEntity> noteEntities = noteDAO.findAll();
         System.out.println("Get all notes : " + noteEntities);
-        return mappingUtil.convertToDTOList(noteEntities);
+        return mappingUtil.noteConvertToDTOList(noteEntities);
     }
 
 }
