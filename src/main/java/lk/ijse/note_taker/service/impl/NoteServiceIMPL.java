@@ -1,8 +1,9 @@
-package lk.ijse.note_taker.service;
+package lk.ijse.note_taker.service.impl;
 
 import lk.ijse.note_taker.dao.NoteDAO;
 import lk.ijse.note_taker.dto.NoteDTO;
 import lk.ijse.note_taker.entity.NoteEntity;
+import lk.ijse.note_taker.service.NoteService;
 import lk.ijse.note_taker.util.AppUtil;
 import lk.ijse.note_taker.util.MappingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
