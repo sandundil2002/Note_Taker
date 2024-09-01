@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -32,10 +33,14 @@ public class NoteServiceIMPL implements NoteService {
 
     @Override
     public boolean updateNote(NoteDTO noteDTO) {
-        if (noteDAO.existsById(noteDTO.getId())){
-            NoteEntity noteEntity = mappingUtil.convertToEntity(noteDTO);
-            noteDAO.save(noteEntity);
-            System.out.println("Note updated : " + noteEntity);
+        Optional<NoteEntity> noteEntity = noteDAO.findById(noteDTO.getId());
+        if (noteEntity.isPresent()){
+            noteEntity.get().setNoteTitle(noteDTO.getNoteTitle());
+            noteEntity.get().setNoteDescription(noteDTO.getNoteDescription());
+            noteEntity.get().setPriorityLevel(noteDTO.getPriorityLevel());
+            noteEntity.get().setCreatedDateTime(noteDTO.getCreatedDateTime());
+            noteDAO.save(noteEntity.get());
+            System.out.println("Note updated : " + noteEntity.get());
             return true;
         } else {
             return false;
