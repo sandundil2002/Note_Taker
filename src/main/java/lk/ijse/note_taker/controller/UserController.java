@@ -21,5 +21,4 @@ public class UserController {
         return "User Controller is OK";
     }
 
-
 }
