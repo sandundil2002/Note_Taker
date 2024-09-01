@@ -39,7 +39,6 @@ public class NoteServiceIMPL implements NoteService {
             noteEntity.get().setNoteDescription(noteDTO.getNoteDescription());
             noteEntity.get().setPriorityLevel(noteDTO.getPriorityLevel());
             noteEntity.get().setCreatedDateTime(noteDTO.getCreatedDateTime());
-            noteDAO.save(noteEntity.get());
             System.out.println("Note updated : " + noteEntity.get());
             return true;
         } else {

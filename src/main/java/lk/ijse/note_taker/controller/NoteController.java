@@ -15,10 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoteController {
 
+    //Add health check
+    @GetMapping(value = "/health")
+    public String healthCheck() {
+        System.out.println("Note Taker API is running");
+        return "Note Taker API is running";
+    }
+
     @Autowired
     private final NoteService noteService;
 
-    //Todo: Save a note
+    //Save a note
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveNote(@RequestBody NoteDTO note) {
         String res = noteService.saveNote(note);
@@ -31,19 +38,19 @@ public class NoteController {
         return noteService.getAllNotes();
     }
 
-    //Todo: Get a note by ID
+    //Get a note by ID
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteDTO getNote(@PathVariable ("id") String noteId)  {
         return noteService.getNoteById(noteId);
     }
 
-    //Todo: Update a note
+    //Update a note
     @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateNote(@RequestBody NoteDTO note) {
         return noteService.updateNote(note) ? ResponseEntity.ok("Note updated successfully") : ResponseEntity.badRequest().body("Failed to update the note");
     }
 
-    //Todo: Delete a note
+    //Delete a note
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteNote(@PathVariable("id") String id) {
         return noteService.deleteNote(id) ? ResponseEntity.ok("Note deleted successfully") : ResponseEntity.badRequest().body("Failed to delete the note");
