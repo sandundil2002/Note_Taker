@@ -25,7 +25,7 @@ public class NoteServiceIMPL implements NoteService {
 
     @Override
     public String saveNote(NoteDTO noteDTO) {
-        noteDTO.setId(AppUtil.generateID());
+        noteDTO.setId(AppUtil.generateNoteID());
         NoteEntity noteEntity = mappingUtil.noteConvertToEntity(noteDTO);
         noteDAO.save(noteEntity);
         System.out.println("Note saved : " + noteEntity);
