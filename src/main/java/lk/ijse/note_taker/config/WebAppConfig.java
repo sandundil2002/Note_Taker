@@ -11,5 +11,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @EnableJpaRepositories(basePackages = "lk.ijse.note_taker")
 @EnableTransactionManagement
-public class WebAppConfig {
-}
+public class WebAppConfig {}
+
+
+
+
+
+

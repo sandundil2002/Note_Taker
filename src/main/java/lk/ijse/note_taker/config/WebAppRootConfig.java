@@ -12,16 +12,15 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "lk.ijse.note_taker")
-@EnableWebMvc
 @EnableJpaRepositories
 @EnableTransactionManagement
 public class WebAppRootConfig {
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -54,4 +53,5 @@ public class WebAppRootConfig {
         txManager.setEntityManagerFactory(entityManagerFactory);
         return txManager;
     }
+
 }

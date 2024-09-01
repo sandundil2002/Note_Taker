@@ -4,7 +4,6 @@ import lk.ijse.note_taker.service.NoteService;
 import lk.ijse.note_taker.dto.NoteDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api/v1/notes")
 @RequiredArgsConstructor
 public class NoteController {
+
     @Autowired
     private final NoteService noteService;
 
@@ -38,18 +38,17 @@ public class NoteController {
     }
 
     //Todo: Update a note
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public void updateNote(@RequestBody NoteDTO note) {
-        noteService.updateNote(note);
+    public ResponseEntity<String> updateNote(@RequestBody NoteDTO note) {
+        return noteService.updateNote(note) ? ResponseEntity.ok("Note updated successfully") : ResponseEntity.badRequest().body("Failed to update the note");
     }
 
     //Todo: Delete a note
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteNote(@PathVariable("id") String id) {
-        noteService.deleteNote(id);
+    public ResponseEntity<String> deleteNote(@PathVariable("id") String id) {
+        return noteService.deleteNote(id) ? ResponseEntity.ok("Note deleted successfully") : ResponseEntity.badRequest().body("Failed to delete the note");
     }
+
 }
 
 
