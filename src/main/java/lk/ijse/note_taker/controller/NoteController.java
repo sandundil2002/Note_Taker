@@ -32,7 +32,7 @@ public class NoteController {
         return ResponseEntity.ok(res);
     }
 
-    //Todo: Get all notes
+    //Get all notes
     @GetMapping(value = "allnotes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<NoteDTO> getAllNotes() {
         return noteService.getAllNotes();

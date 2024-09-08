@@ -73,4 +73,34 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @PatchMapping(value = "/{id}" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateUser(
+            @PathVariable("id") String id,
+            @RequestPart("firstName") String firstName,
+            @RequestPart("lastName") String lastName,
+            @RequestPart("email") String email,
+            @RequestPart("password") String password,
+            @RequestPart("profilePic") String profilePic) {
+
+        //Handle profile picture
+        String base64ProfilePic = AppUtil.toBase64ProfilePic(profilePic);
+
+        //Build the user object
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName(firstName);
+        userDTO.setLastName(lastName);
+        userDTO.setEmail(email);
+        userDTO.setPassword(password);
+        userDTO.setProfilePic(base64ProfilePic);
+
+        boolean updated = userService.updateUser(id, userDTO);
+        if (updated) {
+            System.out.println("User updated successfully");
+            return new ResponseEntity<>("User updated successfully", HttpStatus.NO_CONTENT);
+        } else {
+            System.out.println("User not found");
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
