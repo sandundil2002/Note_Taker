@@ -1,6 +1,6 @@
 package lk.ijse.note_taker.controller;
 
-import lk.ijse.note_taker.dto.NoteDTO;
+import lk.ijse.note_taker.customObj.UserResponse;
 import lk.ijse.note_taker.dto.UserDTO;
 import lk.ijse.note_taker.exception.UserNotFoundException;
 import lk.ijse.note_taker.service.UserService;
@@ -50,30 +50,28 @@ public class UserController {
 
         //Send the user object to the service
         String status = userService.saveUser(userDTO);
-        if (status.equals("User saved successfully")) {
-            System.out.println("User saved successfully");
-            return new ResponseEntity<>("User saved successfully", HttpStatus.CREATED);
-        } else {
-            System.out.println("Failed to save user");
-            return new ResponseEntity<>("Failed to save user", HttpStatus.INTERNAL_SERVER_ERROR);
+        if (status.contains("User saved successfully")){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     //Delete user
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
-        boolean deleted = userService.deleteUser(id);
-        if (deleted) {
-            System.out.println("User deleted successfully");
-            return new ResponseEntity<>("User deleted successfully", HttpStatus.NO_CONTENT);
-        } else {
-            System.out.println("User not found");
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    public ResponseEntity<Void> deleteUser(@PathVariable ("id") String userId) {
+        try {
+            userService.deleteUser(userId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping(value = "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO getUserById(@PathVariable("id") String id) {
+    public UserResponse getUserById(@PathVariable("id") String id) {
         return userService.getUserById(id);
     }
 

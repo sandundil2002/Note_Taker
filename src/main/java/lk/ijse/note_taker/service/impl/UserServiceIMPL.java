@@ -1,5 +1,7 @@
 package lk.ijse.note_taker.service.impl;
 
+import lk.ijse.note_taker.customObj.UserErrorResponse;
+import lk.ijse.note_taker.customObj.UserResponse;
 import lk.ijse.note_taker.dao.UserDAO;
 import lk.ijse.note_taker.dto.UserDTO;
 import lk.ijse.note_taker.entity.UserEntity;
@@ -30,10 +32,12 @@ public class UserServiceIMPL implements UserService {
     public String saveUser(UserDTO userDTO) {
         userDTO.setUserId(AppUtil.generateUserID());
         UserEntity saved = userDAO.save(mappingUtil.userConvertToEntity(userDTO));
-        if (saved != null && saved.getUserId() != null) {
+        if(saved != null && saved.getUserId() != null ) {
+            System.out.println("User saved successfully");
             return "User saved successfully";
-        } else {
-            return "Failed to save user";
+        }else {
+            System.out.println("Save failed");
+            return "Save failed";
         }
     }
 
@@ -41,6 +45,7 @@ public class UserServiceIMPL implements UserService {
     public void updateUser(String  id, UserDTO userDTO) {
         Optional<UserEntity> tmpUser = userDAO.findById(id);
         if (!tmpUser.isPresent()){
+            System.out.println("User not found");
             throw new UserNotFoundException("User not found");
         } else {
             tmpUser.get().setFirstName(userDTO.getFirstName());
@@ -49,23 +54,32 @@ public class UserServiceIMPL implements UserService {
             tmpUser.get().setPassword(userDTO.getPassword());
             tmpUser.get().setProfilePic(userDTO.getProfilePic());
             userDAO.save(tmpUser.get());
+            System.out.println("User updated successfully");
         }
     }
 
     @Override
-    public boolean deleteUser(String id) {
-        if (userDAO.existsById(id)) {
-            userDAO.deleteById(id);
-            return true;
+    public void deleteUser(String userId) {
+        Optional<UserEntity> selectedUserId = userDAO.findById(userId);
+        if(!selectedUserId.isPresent()){
+            System.out.println("User not found");
+            throw new UserNotFoundException("User not found");
         } else {
-            return false;
+            System.out.println("User deleted successfully");
+            userDAO.deleteById(userId);
         }
     }
 
     @Override
-    public UserDTO getUserById(String id) {
-        System.out.println(userDAO.getUserEntityByUserId(id).toString());
-        return mappingUtil.userConvertToDTO(userDAO.getUserEntityByUserId(id));
+    public UserResponse getUserById(String id) {
+        if(userDAO.existsById(id)){
+            UserEntity userEntityByUserId = userDAO.getUserEntityByUserId(id);
+            System.out.println(userEntityByUserId);
+            return mappingUtil.userConvertToDTO(userEntityByUserId);
+        }else {
+            System.out.println("User not found");
+            return new UserErrorResponse(0, "User not found");
+        }
     }
 
     @Override

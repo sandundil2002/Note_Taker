@@ -9,7 +9,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class NoteDTO implements Serializable {
+public class NoteDTO implements SuperDTO {
     private String id;
     private String noteTitle;
     private String noteDescription;
