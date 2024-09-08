@@ -1,5 +1,6 @@
 package lk.ijse.note_taker.controller;
 
+import lk.ijse.note_taker.dto.NoteDTO;
 import lk.ijse.note_taker.dto.UserDTO;
 import lk.ijse.note_taker.service.UserService;
 import lk.ijse.note_taker.util.AppUtil;
@@ -58,6 +59,11 @@ public class UserController {
             System.out.println("User not found");
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO getUserById(@PathVariable("id") String id) {
+        return userService.getUserById(id);
     }
 
 }

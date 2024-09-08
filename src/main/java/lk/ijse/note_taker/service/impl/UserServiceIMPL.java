@@ -2,6 +2,7 @@ package lk.ijse.note_taker.service.impl;
 
 import lk.ijse.note_taker.dao.UserDAO;
 import lk.ijse.note_taker.dto.UserDTO;
+import lk.ijse.note_taker.entity.UserEntity;
 import lk.ijse.note_taker.service.UserService;
 import lk.ijse.note_taker.util.AppUtil;
 import lk.ijse.note_taker.util.MappingUtil;
@@ -47,7 +48,8 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public UserDTO getUserById(String id) {
-        return null;
+        System.out.println(userDAO.getUserEntityByUserId(id).toString());
+        return mappingUtil.userConvertToDTO(userDAO.getUserEntityByUserId(id));
     }
 
     @Override
