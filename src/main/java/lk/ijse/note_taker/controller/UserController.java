@@ -47,4 +47,17 @@ public class UserController {
         return new ResponseEntity<>(userService.saveUser(userDTO), HttpStatus.CREATED);
     }
 
+    //Delete user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
+        boolean deleted = userService.deleteUser(id);
+        if (deleted) {
+            System.out.println("User deleted successfully");
+            return new ResponseEntity<>("User deleted successfully", HttpStatus.NO_CONTENT);
+        } else {
+            System.out.println("User not found");
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

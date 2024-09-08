@@ -37,7 +37,12 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public boolean deleteUser(String id) {
-        return false;
+        if (userDAO.existsById(id)) {
+            userDAO.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -49,4 +54,5 @@ public class UserServiceIMPL implements UserService {
     public List<UserDTO> getAllUsers() {
         return null;
     }
+
 }
