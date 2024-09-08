@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
     String saveUser(UserDTO userDTO);
-    boolean updateUser(String id, UserDTO userDTO);
+    void updateUser(String id, UserDTO userDTO);
     boolean deleteUser(String id);
     UserDTO getUserById(String id);
     List<UserDTO> getAllUsers();

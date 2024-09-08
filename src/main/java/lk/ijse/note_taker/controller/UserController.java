@@ -2,6 +2,7 @@ package lk.ijse.note_taker.controller;
 
 import lk.ijse.note_taker.dto.NoteDTO;
 import lk.ijse.note_taker.dto.UserDTO;
+import lk.ijse.note_taker.exception.UserNotFoundException;
 import lk.ijse.note_taker.service.UserService;
 import lk.ijse.note_taker.util.AppUtil;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,16 @@ public class UserController {
         userDTO.setEmail(email);
         userDTO.setPassword(password);
         userDTO.setProfilePic(base64ProfilePic);
+
         //Send the user object to the service
-        return new ResponseEntity<>(userService.saveUser(userDTO), HttpStatus.CREATED);
+        String status = userService.saveUser(userDTO);
+        if (status.equals("User saved successfully")) {
+            System.out.println("User saved successfully");
+            return new ResponseEntity<>("User saved successfully", HttpStatus.CREATED);
+        } else {
+            System.out.println("Failed to save user");
+            return new ResponseEntity<>("Failed to save user", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //Delete user
@@ -74,7 +83,7 @@ public class UserController {
     }
 
     @PatchMapping(value = "/{id}" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> updateUser(
+    public ResponseEntity<Void> updateUser(
             @PathVariable("id") String id,
             @RequestPart("firstName") String firstName,
             @RequestPart("lastName") String lastName,
@@ -82,24 +91,24 @@ public class UserController {
             @RequestPart("password") String password,
             @RequestPart("profilePic") String profilePic) {
 
-        //Handle profile picture
-        String base64ProfilePic = AppUtil.toBase64ProfilePic(profilePic);
+        try {
+            //Handle profile picture
+            String base64ProfilePic = AppUtil.toBase64ProfilePic(profilePic);
 
-        //Build the user object
-        UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName(firstName);
-        userDTO.setLastName(lastName);
-        userDTO.setEmail(email);
-        userDTO.setPassword(password);
-        userDTO.setProfilePic(base64ProfilePic);
+            //Build the user object
+            UserDTO userDTO = new UserDTO();
+            userDTO.setFirstName(firstName);
+            userDTO.setLastName(lastName);
+            userDTO.setEmail(email);
+            userDTO.setPassword(password);
+            userDTO.setProfilePic(base64ProfilePic);
 
-        boolean updated = userService.updateUser(id, userDTO);
-        if (updated) {
-            System.out.println("User updated successfully");
-            return new ResponseEntity<>("User updated successfully", HttpStatus.NO_CONTENT);
-        } else {
-            System.out.println("User not found");
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            userService.updateUser(id, userDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (UserNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

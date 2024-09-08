@@ -3,6 +3,7 @@ package lk.ijse.note_taker.service.impl;
 import lk.ijse.note_taker.dao.UserDAO;
 import lk.ijse.note_taker.dto.UserDTO;
 import lk.ijse.note_taker.entity.UserEntity;
+import lk.ijse.note_taker.exception.UserNotFoundException;
 import lk.ijse.note_taker.service.UserService;
 import lk.ijse.note_taker.util.AppUtil;
 import lk.ijse.note_taker.util.MappingUtil;
@@ -28,15 +29,19 @@ public class UserServiceIMPL implements UserService {
     @Override
     public String saveUser(UserDTO userDTO) {
         userDTO.setUserId(AppUtil.generateUserID());
-        userDAO.save(mappingUtil.userConvertToEntity(userDTO));
-        return "User saved successfully";
+        UserEntity saved = userDAO.save(mappingUtil.userConvertToEntity(userDTO));
+        if (saved != null && saved.getUserId() != null) {
+            return "User saved successfully";
+        } else {
+            return "Failed to save user";
+        }
     }
 
     @Override
-    public boolean updateUser(String  id, UserDTO userDTO) {
+    public void updateUser(String  id, UserDTO userDTO) {
         Optional<UserEntity> tmpUser = userDAO.findById(id);
         if (!tmpUser.isPresent()){
-            return false;
+            throw new UserNotFoundException("User not found");
         } else {
             tmpUser.get().setFirstName(userDTO.getFirstName());
             tmpUser.get().setLastName(userDTO.getLastName());
@@ -44,7 +49,6 @@ public class UserServiceIMPL implements UserService {
             tmpUser.get().setPassword(userDTO.getPassword());
             tmpUser.get().setProfilePic(userDTO.getProfilePic());
             userDAO.save(tmpUser.get());
-            return true;
         }
     }
 
