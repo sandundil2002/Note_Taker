@@ -3,6 +3,7 @@ package lk.ijse.note_taker.service.impl;
 import lk.ijse.note_taker.dao.NoteDAO;
 import lk.ijse.note_taker.dto.NoteDTO;
 import lk.ijse.note_taker.entity.NoteEntity;
+import lk.ijse.note_taker.exception.NoteNotFoundException;
 import lk.ijse.note_taker.service.NoteService;
 import lk.ijse.note_taker.util.AppUtil;
 import lk.ijse.note_taker.util.MappingUtil;
@@ -33,17 +34,18 @@ public class NoteServiceIMPL implements NoteService {
     }
 
     @Override
-    public boolean updateNote(NoteDTO noteDTO) {
-        Optional<NoteEntity> noteEntity = noteDAO.findById(noteDTO.getId());
-        if (noteEntity.isPresent()){
-            noteEntity.get().setNoteTitle(noteDTO.getNoteTitle());
-            noteEntity.get().setNoteDescription(noteDTO.getNoteDescription());
-            noteEntity.get().setPriorityLevel(noteDTO.getPriorityLevel());
-            noteEntity.get().setCreatedDateTime(noteDTO.getCreatedDateTime());
-            System.out.println("Note updated : " + noteEntity.get());
-            return true;
-        } else {
-            return false;
+    public void updateNote(String id , NoteDTO noteDTO) {
+        Optional<NoteEntity> tmpNoteEntity= noteDAO.findById(id);
+        if(!tmpNoteEntity.isPresent()){
+            throw new NoteNotFoundException("Note not found");
+        }else {
+            NoteEntity noteEntity = tmpNoteEntity.get();
+            noteEntity.setNoteTitle(noteDTO.getNoteTitle());
+            noteEntity.setNoteDescription(noteDTO.getNoteDescription());
+            noteEntity.setPriorityLevel(noteDTO.getPriorityLevel());
+            noteEntity.setCreatedDateTime(noteDTO.getCreatedDateTime());
+            noteDAO.save(noteEntity);
+            System.out.println("Note updated : " + noteEntity);
         }
     }
 
