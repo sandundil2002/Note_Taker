@@ -3,7 +3,7 @@ package lk.ijse.note_taker.service.impl;
 import lk.ijse.note_taker.customObj.UserErrorResponse;
 import lk.ijse.note_taker.customObj.UserResponse;
 import lk.ijse.note_taker.dao.UserDAO;
-import lk.ijse.note_taker.dto.UserDTO;
+import lk.ijse.note_taker.dto.impl.UserDTO;
 import lk.ijse.note_taker.entity.UserEntity;
 import lk.ijse.note_taker.exception.UserNotFoundException;
 import lk.ijse.note_taker.service.UserService;

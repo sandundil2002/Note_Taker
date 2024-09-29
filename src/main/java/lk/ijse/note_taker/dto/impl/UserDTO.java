@@ -1,6 +1,7 @@
-package lk.ijse.note_taker.dto;
+package lk.ijse.note_taker.dto.impl;
 
 import lk.ijse.note_taker.customObj.UserResponse;
+import lk.ijse.note_taker.dto.SuperDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

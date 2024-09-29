@@ -1,7 +1,7 @@
 package lk.ijse.note_taker.service.impl;
 
 import lk.ijse.note_taker.dao.NoteDAO;
-import lk.ijse.note_taker.dto.NoteDTO;
+import lk.ijse.note_taker.dto.impl.NoteDTO;
 import lk.ijse.note_taker.entity.NoteEntity;
 import lk.ijse.note_taker.exception.NoteNotFoundException;
 import lk.ijse.note_taker.service.NoteService;

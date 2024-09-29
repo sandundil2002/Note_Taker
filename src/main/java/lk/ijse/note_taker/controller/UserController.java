@@ -1,7 +1,7 @@
 package lk.ijse.note_taker.controller;
 
 import lk.ijse.note_taker.customObj.UserResponse;
-import lk.ijse.note_taker.dto.UserDTO;
+import lk.ijse.note_taker.dto.impl.UserDTO;
 import lk.ijse.note_taker.exception.UserNotFoundException;
 import lk.ijse.note_taker.service.UserService;
 import lk.ijse.note_taker.util.AppUtil;

@@ -1,7 +1,7 @@
 package lk.ijse.note_taker.util;
 
-import lk.ijse.note_taker.dto.NoteDTO;
-import lk.ijse.note_taker.dto.UserDTO;
+import lk.ijse.note_taker.dto.impl.NoteDTO;
+import lk.ijse.note_taker.dto.impl.UserDTO;
 import lk.ijse.note_taker.entity.NoteEntity;
 import lk.ijse.note_taker.entity.UserEntity;
 import org.modelmapper.ModelMapper;

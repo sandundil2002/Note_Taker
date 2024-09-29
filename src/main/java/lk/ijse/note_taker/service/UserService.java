@@ -1,7 +1,7 @@
 package lk.ijse.note_taker.service;
 
 import lk.ijse.note_taker.customObj.UserResponse;
-import lk.ijse.note_taker.dto.UserDTO;
+import lk.ijse.note_taker.dto.impl.UserDTO;
 
 import java.util.List;
 
