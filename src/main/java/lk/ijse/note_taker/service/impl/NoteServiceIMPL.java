@@ -1,5 +1,7 @@
 package lk.ijse.note_taker.service.impl;
 
+import lk.ijse.note_taker.customObj.NoteErrorResponse;
+import lk.ijse.note_taker.customObj.NoteResponse;
 import lk.ijse.note_taker.dao.NoteDAO;
 import lk.ijse.note_taker.dto.impl.NoteDTO;
 import lk.ijse.note_taker.entity.NoteEntity;
@@ -39,13 +41,11 @@ public class NoteServiceIMPL implements NoteService {
         if(!tmpNoteEntity.isPresent()){
             throw new NoteNotFoundException("Note not found");
         }else {
-            NoteEntity noteEntity = tmpNoteEntity.get();
-            noteEntity.setNoteTitle(noteDTO.getNoteTitle());
-            noteEntity.setNoteDescription(noteDTO.getNoteDescription());
-            noteEntity.setPriorityLevel(noteDTO.getPriorityLevel());
-            noteEntity.setCreatedDateTime(noteDTO.getCreatedDateTime());
-            noteDAO.save(noteEntity);
-            System.out.println("Note updated : " + noteEntity);
+            tmpNoteEntity.get().setNoteTitle(noteDTO.getNoteTitle());
+            tmpNoteEntity.get().setNoteDescription(noteDTO.getNoteDescription());
+            tmpNoteEntity.get().setCreatedDateTime(noteDTO.getCreatedDateTime());
+            tmpNoteEntity.get().setPriorityLevel(noteDTO.getPriorityLevel());
+            System.out.println("Note updated : " + noteDTO);
         }
     }
 
@@ -61,17 +61,17 @@ public class NoteServiceIMPL implements NoteService {
     }
 
     @Override
-    public NoteDTO getNoteById(String id) {
-        NoteEntity noteEntity = noteDAO.findById(id).get();
-        System.out.println("Get note by id : " + noteEntity);
-        return mappingUtil.noteConvertToDTO(noteEntity);
+    public NoteResponse getNoteById(String id) {
+        if (noteDAO.existsById(id)){
+            return mappingUtil.noteConvertToDTO(noteDAO.getReferenceById(id));
+        } else {
+            throw new NoteNotFoundException("Note not found");
+        }
     }
 
     @Override
     public List<NoteDTO> getAllNotes() {
-        List<NoteEntity> noteEntities = noteDAO.findAll();
-        System.out.println("Get all notes : " + noteEntities);
-        return mappingUtil.noteConvertToDTOList(noteEntities);
+        return mappingUtil.noteConvertToDTOList(noteDAO.findAll());
     }
 
 }

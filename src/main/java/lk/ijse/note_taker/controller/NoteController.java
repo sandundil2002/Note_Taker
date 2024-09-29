@@ -1,5 +1,6 @@
 package lk.ijse.note_taker.controller;
 
+import lk.ijse.note_taker.customObj.NoteResponse;
 import lk.ijse.note_taker.exception.DataPersistFailedException;
 import lk.ijse.note_taker.exception.NoteNotFoundException;
 import lk.ijse.note_taker.service.NoteService;
@@ -45,9 +46,9 @@ public class NoteController {
     }
 
     //Get a note by ID
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public NoteDTO getNote(@PathVariable ("id") String noteId)  {
-       return noteService.getNoteById(noteId);
+    @GetMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public NoteResponse getSelectedNote(@PathVariable ("noteId") String noteId)  {
+        return noteService.getNoteById(noteId);
     }
 
     //Update a note
