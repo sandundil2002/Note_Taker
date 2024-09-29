@@ -1,5 +1,6 @@
 package lk.ijse.note_taker.controller;
 
+import lk.ijse.note_taker.exception.DataPersistFailedException;
 import lk.ijse.note_taker.exception.NoteNotFoundException;
 import lk.ijse.note_taker.service.NoteService;
 import lk.ijse.note_taker.dto.NoteDTO;
@@ -16,36 +17,23 @@ import java.util.List;
 @RequestMapping("/api/v1/notes")
 @RequiredArgsConstructor
 public class NoteController {
-
-    //Add health check
-    @GetMapping(value = "/health")
-    public String healthCheck() {
-        System.out.println("Note Taker API is running");
-        return "Note Taker API is running";
-    }
-
     @Autowired
     private final NoteService noteService;
 
     //Save a note
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> saveNote(
-            @RequestPart("noteTitle") String noteTitle,
-            @RequestPart("noteDescription") String noteDescription,
-            @RequestPart("priorityLevel") String priorityLevel,
-            @RequestPart("createdDateTime") String createdDateTime) {
-
-        NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setNoteTitle(noteTitle);
-        noteDTO.setNoteDescription(noteDescription);
-        noteDTO.setPriorityLevel(priorityLevel);
-        noteDTO.setCreatedDateTime(createdDateTime);
-
-        String status = noteService.saveNote(noteDTO);
-        if (status.contains("Note saved successfully")) {
-            return ResponseEntity.ok("Note saved successfully");
+    public ResponseEntity<Void> saveNote(@RequestBody NoteDTO noteDTO) {
+        if (noteDTO == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return ResponseEntity.badRequest().body("Failed to save the note");
+            try {
+                noteService.saveNote(noteDTO);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }catch (DataPersistFailedException e){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }catch (Exception e){
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
