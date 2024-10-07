@@ -1,6 +1,6 @@
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=50&pause=1000&center=true&vCenter=true&width=835&height=70&lines=Note+Taker" alt="Typing SVG" /></a>
 
-<p id="description">The Note Taker API is a comprehensive RESTful service designed to manage user notes efficiently. Built with Spring Boot JPA and Hibernate this API leverages a MySQL database to provide robust CRUD operations for notes and user management. It supports functionalities such as creating retrieving updating and deleting notes along with user profile management including profile picture uploads.</p>
+<p id="description">The Note Taker API is a comprehensive RESTful service designed to manage user notes efficiently. Built with Spring framework, JPA and Hibernate this API leverages a MySQL database to provide robust CRUD operations for notes and user management. It supports functionalities such as creating retrieving updating and deleting notes along with user profile management including profile picture uploads.</p>
 
   
   
